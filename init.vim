@@ -20,8 +20,17 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 "JavaScript completion with tern
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install && npm install -g tern' }
 " Emmet for vim 
 Plug 'mattn/emmet-vim'
+" Nerd font support
+Plug 'ryanoasis/vim-devicons'
+" Air-Line for vim
+Plug 'vim-airline/vim-airline'
+" Git Gutter
+Plug 'airblade/vim-gitgutter'
+"Vim Sandwich
+Plug 'machakann/vim-sandwich'
 call plug#end()
 
 " re-map leader key to ';'
@@ -31,6 +40,7 @@ if (has("termguicolors"))
  set termguicolors
 endif
 
+let g:python_recommended_style = 0
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 
@@ -47,7 +57,9 @@ set cursorline          " highlight current line
 set wildmenu            " visual autocomplete for command menu
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
-set hlsearch            " highlight matche
+set hlsearch            " highlight matches
+set encoding=utf8
+set guifont=Hack_Nerd_Font:h11
 
 " Fuzzy file finder to behave like cntrl-P
 nnoremap <c-p> :FZF<cr>
@@ -82,7 +94,6 @@ endif
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-
 " Creates the Ag: command for text searching 
 command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 " Bind \ to do our Ag:
@@ -100,7 +111,11 @@ let g:deoplete#sources#ternjs#filetypes = [
                 \ 'javascript.jsx',
                 \ ]
 "remap emmet-vim Cntrl y to contrl e
-let g:user_emmet_leader_key='<C-E>'
-" Auto open nerdtree
-autocmd vimenter * NERDTree
+let g:user_emmet_expandabbr_key='<C-E>'
+let g:user_emmet_settings = {
+		\  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  	\}
 
+au VimEnter *  NERDTree
